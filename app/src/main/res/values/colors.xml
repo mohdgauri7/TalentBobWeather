@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="lebelDarkSecondary">#99EBEBF5</color>
+    <color name="lebelLightSecondary">#3C3C43</color>
+    <color name="lebelLightTertiary">#3C3C43</color>
+    <color name="lebelDarkPrimary">#FFFFFF</color>
+    <color name="modal_bg_color">#A499C0</color>
+    <color name="fill_color">#48319D</color>
+    <color name="weather_text_color">#40CBD8</color>
+    <color name="weather_bg1">#2E335A</color>
+    <color name="weather_bg2">#1C1B33</color>
+    <color name="light_gray">#EBEBF5</color>
+    <color name="weather_tab_inactive">#3548319D</color>
+    <color name="weather_tab_active">#FF48319D</color>
+    <color name="divider_color">#D9D9D9</color>
+    <color name="eclips_color">#FEE0D9FF</color>
+    <color name="wind_widget_bg">#2E205A</color>
+    <color name="light_blue_50">#FFE1F5FE</color>
+    <color name="light_blue_200">#FF81D4FA</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
+</resources>
