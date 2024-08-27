@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView tvCityName, tvDescription, tvTemperature;
     private CardView progressBarCV;
-    private ImageView ivRefresh, ivCloud;
+    private ImageView ivRefresh, ivCloud, ivLocation, ivAdd;
 
     private String placeStr = "";
 
@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         setContentView(R.layout.activity_main);
 
+        ivAdd = findViewById(R.id.ivAdd);
+        ivLocation = findViewById(R.id.ivLocation);
         ivCloud = findViewById(R.id.ivCloud);
         ivRefresh = findViewById(R.id.ivRefresh);
         tvTemperature = findViewById(R.id.tvTemperature);
@@ -84,6 +86,18 @@ public class MainActivity extends AppCompatActivity {
                     getWeatherDataWithPlace(placeStr);
                 }
 
+            }
+        });
+        ivLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCustomDialog(MainActivity.this);
+            }
+        });
+        ivAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showCustomDialog(MainActivity.this);
             }
         });
 
@@ -180,7 +194,12 @@ public class MainActivity extends AppCompatActivity {
         });
         btnLocationPermission.setOnClickListener(v -> {
             // Handle negative button click
-            askLocationPermission();
+            if(isPermissionAllowed()){
+
+                requestCurrentLocation();
+            }else{
+                askLocationPermission();
+            }
             alertDialog.dismiss();
         });
 
@@ -204,6 +223,7 @@ public class MainActivity extends AppCompatActivity {
                 .subscribe(this::setData, throwable -> {
                     // Handle error
                     throwable.printStackTrace();
+                    progressBarCV.setVisibility(View.GONE);
                     Log.d("ResultAPI", "error: "+throwable.getMessage());
                 });
 
@@ -216,7 +236,7 @@ public class MainActivity extends AppCompatActivity {
         // For example: update UI, store data, etc.
         apiInterface.GetLocationWeather(
                         "4ec713a8368f4df0b33133054242608", // API key
-                        "28.704060,77.102493", // Location (latitude,longitude)
+                        location, // Location (latitude,longitude)
                         "no" // Air Quality Index (AQI)
                 )
                 .subscribeOn(Schedulers.io())
@@ -225,11 +245,13 @@ public class MainActivity extends AppCompatActivity {
                     // Handle error
                     throwable.printStackTrace();
                     Log.d("ResultAPI", "error: "+throwable.getMessage());
+                    progressBarCV.setVisibility(View.GONE);
                 });
     }
 
 
     private void requestCurrentLocation() {
+        progressBarCV.setVisibility(View.VISIBLE);
         Log.d(TAG, "requestCurrentLocation()");
         // Request permission
         if (ActivityCompat.checkSelfPermission(this
